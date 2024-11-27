@@ -35,7 +35,7 @@ def categorize(usages, keyword_map):
 data["카테고리"] = categorize(data["거래처"], all_keywords)
 
 # 분류 결과 저장
-output_path = "classified_data.csv"
+output_path = "results/classified_data.csv"
 data.to_csv(output_path, index=False, encoding="utf-8-sig")
 
 print(f"분류된 파일이 저장되었습니다: {output_path}")
