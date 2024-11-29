@@ -1,27 +1,42 @@
+import unittest
+import pandas as pd
 import os
-from visualizer import load_data, draw_pie_chart, draw_line_chart, draw_bar_chart
+import matplotlib.pyplot as plt
+from expense_manager_library.visualizer import draw_pie_chart, draw_line_chart, draw_bar_chart
 
-# 테스트 데이터 파일 경로
-DATA_FILE = "examples/example_data.csv"
+class TestVisualizer(unittest.TestCase):
 
-# 테스트 함수
-def test_visualizer():
-    if not os.path.exists(DATA_FILE):
-        print(f"Error: {DATA_FILE} 파일이 존재하지 않습니다. 데이터를 준비해주세요.")
-        return
+    def setUp(self):
+        self.data = pd.DataFrame({
+            "카테고리": ["여가", "교통", "식비", "쇼핑"],
+            "금액": [35000, 4000, 13000, 55000],
+            "날짜": ["2024-10-29", "2024-11-02", "2024-11-02", "2024-11-03"]
+        })
+       
+        self.data["날짜"] = self.data["날짜"].str.replace("-", "").astype(str)
+        self.output_dir = "results/"
+        os.makedirs(self.output_dir, exist_ok=True)
 
-    print("데이터를 로드 중입니다...")
-    data = load_data(DATA_FILE)
-    print("데이터 로드 완료!")
-    
-    print("파이 차트를 그리는 중입니다...")
-    draw_pie_chart(data)
-    
-    print("라인 차트를 그리는 중입니다...")
-    draw_line_chart(data)
-    
-    print("바 차트를 그리는 중입니다...")
-    draw_bar_chart(data)
+    def tearDown(self):
+        plt.close("all")
+
+    def test_draw_pie_chart(self):
+        fig, ax = plt.subplots()
+        draw_pie_chart(self.data, ax=ax)
+        self.assertIsNotNone(ax)
+        plt.savefig(os.path.join(self.output_dir, "test_pie_chart.png"))
+
+    def test_draw_line_chart(self):
+        fig, ax = plt.subplots()
+        draw_line_chart(self.data, ax=ax)
+        self.assertIsNotNone(ax)
+        plt.savefig(os.path.join(self.output_dir, "test_line_chart.png"))
+
+    def test_draw_bar_chart(self):
+        fig, ax = plt.subplots()
+        draw_bar_chart(self.data, ax=ax)
+        self.assertIsNotNone(ax)
+        plt.savefig(os.path.join(self.output_dir, "test_bar_chart.png"))
 
 if __name__ == "__main__":
-    test_visualizer()
+    unittest.main()
