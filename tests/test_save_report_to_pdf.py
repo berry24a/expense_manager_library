@@ -1,7 +1,7 @@
 import unittest
 import pandas as pd
 import os
-from expense_manager_library import save_report_to_pdf, generate_report
+from expense_manager_library.report_generator import save_report_to_pdf, generate_report
 
 class TestSaveReportToPDF(unittest.TestCase):
 
