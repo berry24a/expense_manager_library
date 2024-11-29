@@ -1,8 +1,14 @@
 import os
-from visualizer import load_data, draw_pie_chart, draw_line_chart, draw_bar_chart
+import sys
+import os
+
+# 프로젝트 루트를 모듈 경로에 추가
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from expense_manager_library.visualizer import load_data, draw_pie_chart, draw_line_chart, draw_bar_chart
 
 # 테스트 데이터 파일 경로
-DATA_FILE = "examples/example_data.csv"
+DATA_FILE = "results/classified_data.csv"
 
 # 테스트 함수
 def test_visualizer():
@@ -16,6 +22,7 @@ def test_visualizer():
     
     print("파이 차트를 그리는 중입니다...")
     draw_pie_chart(data)
+    
     
     print("라인 차트를 그리는 중입니다...")
     draw_line_chart(data)
