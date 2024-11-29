@@ -1,3 +1,5 @@
+#python -m tests.test_generate_report 이걸로 실행해야함.
+
 import os
 from .visualizer import load_data, draw_pie_chart, draw_line_chart, draw_bar_chart
 import matplotlib.pyplot as plt
