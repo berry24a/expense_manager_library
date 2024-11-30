@@ -24,7 +24,7 @@ def _categorize(usages, keyword_map):
     return result
 
 # 메인 분류 함수
-def classify_expenses(input_csv):
+def classify_expenses(input_csv, output_csv):
     # 입력 파일 경로 확인
     if not os.path.exists(input_csv):
         raise FileNotFoundError(f"지정한 파일을 찾을 수 없습니다: {input_csv}")
@@ -39,11 +39,6 @@ def classify_expenses(input_csv):
     # 카테고리 분류
     data["카테고리"] = _categorize(data["거래처"], all_keywords)
     
-    # 결과 저장 경로 설정
-    output_dir = "results"
-    os.makedirs(output_dir, exist_ok=True)  # 디렉토리가 없으면 생성
-    output_path = os.path.join(output_dir, "classified_data.csv")
-    
     # CSV 저장
-    data.to_csv(output_path, index=False, encoding="utf-8-sig")
-    print(f"분류된 파일이 저장되었습니다: {output_path}")
+    data.to_csv(output_csv, index=False, encoding="utf-8-sig")
+    print(f"분류된 파일이 저장되었습니다: {output_csv}")
