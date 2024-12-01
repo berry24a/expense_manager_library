@@ -1,5 +1,7 @@
+#python -m tests.test_generate_report 이걸로 실행해야함.
+
 import os
-from .visualizer import draw_pie_chart, draw_line_chart, draw_bar_chart
+from .visualizer import load_data, draw_pie_chart, draw_line_chart, draw_bar_chart
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 from matplotlib.backends.backend_pdf import PdfPages
@@ -45,7 +47,7 @@ def save_report_to_pdf(data, report_text, selected_graphs, show_report=True,
                 bbox=dict(boxstyle="round,pad=0.5", edgecolor=border_color, facecolor=background_color),
             )
             report_ax.set_title("소비 금액", fontsize=14, pad=10)
-            current_index += 1
+            current_index +=1
 
         for graph in selected_graphs:
             graph_ax = fig.add_subplot(gs[current_index // cols, current_index % cols])
