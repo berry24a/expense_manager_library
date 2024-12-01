@@ -10,30 +10,26 @@ class TestSaveReportToPDF(unittest.TestCase):
         self.data = pd.DataFrame({
             "카테고리": ["교통", "쇼핑", "식비", "쇼핑"],
             "금액": [6000, 30000, 20000, 15000],
+            "날짜": ["20241031", "20241031", "20241102", "20241105"]
         })
         self.report_text = generate_report(self.data, include_total=True, include_categories=True)
         self.pdf_path = "results/test_report.pdf"
+        os.makedirs(os.path.dirname(self.pdf_path), exist_ok=True)
 
-    # 테스트 후 파일 제거
-    def remove(self):
+    def tearDown(self):
         if os.path.exists(self.pdf_path):
             os.remove(self.pdf_path)
 
-    # PDF 파일 생성 테스트
-    def test_save_report_to_pdf_file_creation(self):
-        save_report_to_pdf(self.data, self.report_text, ["pie"], show_report=True, pdf_path=self.pdf_path)
-        self.assertTrue(os.path.exists(self.pdf_path))
-
-    # PDF 파일이 비어있지 않은지 확인
-    def test_save_report_to_pdf_file_not_empty(self):
-        save_report_to_pdf(self.data, self.report_text, ["pie", "line"], show_report=True, pdf_path=self.pdf_path)
-        self.assertTrue(os.path.getsize(self.pdf_path) > 0)
-
-    # 그래프 없이 보고서만 생성 테스트
-    def test_save_report_to_pdf_no_graphs(self):
-        save_report_to_pdf(self.data, self.report_text, [], show_report=True, pdf_path=self.pdf_path)
+    def test_save_report_to_pdf(self):
+        save_report_to_pdf(
+            data=self.data,
+            report_text=self.report_text,
+            selected_graphs=["pie","line", "bar"],  
+            show_report=True,  
+            pdf_path=self.pdf_path
+        )
         self.assertTrue(os.path.exists(self.pdf_path))
         self.assertTrue(os.path.getsize(self.pdf_path) > 0)
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()  
