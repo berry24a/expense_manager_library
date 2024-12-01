@@ -2,48 +2,58 @@ import unittest
 import pandas as pd
 import os
 import sys
-import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../expense_manager_library')))
+from expense_manager_library.report_generator import generate_report
 
-# 프로젝트 루트를 모듈 경로에 추가
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+class TestGenerateReport(unittest.TestCase):
 
-from expense_manager_library.report_generator import save_report_to_pdf, generate_report
-
-class TestSaveReportToPDF(unittest.TestCase):
-
-    # 테스트용 데이터
+    # 테스트용 데이터 
     def setUp(self):
         self.data = pd.DataFrame({
-            "날짜": ["20240101", "20240102", "20240103", "20240104"],
             "카테고리": ["교통", "쇼핑", "식비", "쇼핑"],
             "금액": [6000, 30000, 20000, 15000],
         })
-        self.report_text = generate_report(self.data, include_total=True, include_categories=True)
-        self.pdf_path = "results/test_report.pdf"
+        self.output_dir = "results/"
+        os.makedirs(self.output_dir, exist_ok=True)
 
+    def tearDown(self):
+        test_report_path = "results/test_report_both.txt"
+        if os.path.exists(test_report_path):
+            os.remove(test_report_path)
 
-    # 테스트 후 파일 제거
-    def remove(self):
-        if os.path.exists(self.pdf_path):
-            os.remove(self.pdf_path)
+    # 총 금액 및 카테고리 포함 테스트
+    def test_generate_report_include_both(self):
+        report = generate_report(self.data, include_total=True, include_categories=True)
+        self.assertIn("총 소비 금액: 71,000원", report)
+        self.assertIn("쇼핑: 45,000원", report)
+        self.assertIn("식비: 20,000원", report)
+        self.assertIn("교통: 6,000원", report)
+        output_path = os.path.join("results", "test_report_both.txt")
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(report)
 
-    # PDF 파일 생성 테스트
-    def test_save_report_to_pdf_file_creation(self):
-        save_report_to_pdf(self.data, self.report_text, ["pie"], show_report=True, pdf_path=self.pdf_path)
-        self.assertTrue(os.path.exists(self.pdf_path))
+    # 총 금액만 포함 테스트
+    def test_generate_report_only_total(self):
+        report = generate_report(self.data, include_total=True, include_categories=False)
+        self.assertIn("총 소비 금액: 71,000원", report)
+        self.assertNotIn("쇼핑: 45,000원", report)
+        self.assertNotIn("식비: 20,000원", report)
+        self.assertNotIn("교통: 6,000원", report)
 
-    # PDF 파일이 비어있지 않은지 확인
-    def test_save_report_to_pdf_file_not_empty(self):
-        save_report_to_pdf(self.data, self.report_text, ["pie", "line"], show_report=True, pdf_path=self.pdf_path)
-        self.assertTrue(os.path.exists(self.pdf_path))
-        self.assertTrue(os.path.getsize(self.pdf_path) > 0)
+    # 카테고리만 포함 테스트
+    def test_generate_report_only_categories(self):
+        report = generate_report(self.data, include_total=False, include_categories=True)
+        self.assertNotIn("총 소비 금액: 71,000원", report)
+        self.assertIn("쇼핑: 45,000원", report)
+        self.assertIn("식비: 20,000원", report)
+        self.assertIn("교통: 6,000원", report)
 
-
-    # 그래프 없이 보고서만 생성 테스트
-    def test_save_report_to_pdf_no_graphs(self):
-        save_report_to_pdf(self.data, self.report_text, [], show_report=True, pdf_path=self.pdf_path)
-        self.assertTrue(os.path.exists(self.pdf_path))
-        self.assertTrue(os.path.getsize(self.pdf_path) > 0)
+    # 빈 데이터 테스트
+    def test_generate_report_empty_data(self):
+        empty_data = pd.DataFrame(columns=["카테고리", "금액"])
+        report = generate_report(empty_data, include_total=True, include_categories=True)
+        self.assertIn("총 소비 금액: 0원", report)
 
 if __name__ == "__main__":
     unittest.main()
