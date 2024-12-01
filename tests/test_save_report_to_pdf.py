@@ -1,6 +1,10 @@
 import unittest
 import pandas as pd
 import os
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from expense_manager_library.report_generator import save_report_to_pdf, generate_report
 
 class TestSaveReportToPDF(unittest.TestCase):
@@ -8,6 +12,7 @@ class TestSaveReportToPDF(unittest.TestCase):
     # 테스트용 데이터
     def setUp(self):
         self.data = pd.DataFrame({
+            "날짜": ["20240101", "20240102", "20240103", "20240104"],
             "카테고리": ["교통", "쇼핑", "식비", "쇼핑"],
             "금액": [6000, 30000, 20000, 15000],
             "날짜": ["20241031", "20241031", "20241102", "20241105"]

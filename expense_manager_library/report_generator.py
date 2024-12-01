@@ -26,7 +26,6 @@ def save_report_to_pdf(data, report_text, selected_graphs, show_report=True,
     num_items = len(selected_graphs) + (1 if show_report else 0)
     rows = (num_items + 1) // 2
     cols = 2
-
     current_index = 0
 
     with PdfPages(pdf_path) as pdf:
