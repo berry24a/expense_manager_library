@@ -11,14 +11,10 @@ CATEGORIES_KEYWORDS = {
     "여가": ["CGV", "영화", "노래방", "PC방", "피씨방", "피시방", "여가", "시네마", "메가박스", "뮤지컬", "콘서트", "야구", "축구", "베구", "농구"]
 }
 
+#사용자 지출 내역을 분류하여 결과 파일 저장.
 def categorize_transactions(csv_path, results_dir="results"):
-    """
-    사용자 지출 내역을 분류하여 결과 파일 저장.
     
-    Parameters:
-        csv_path (str): 입력 CSV 파일 경로
-        results_dir (str): 결과 파일 저장 경로 (기본값: 'results')
-    """
+    
     # 데이터 읽기
     data = pd.read_csv(csv_path)
     data["거래처"] = data["거래처"].str.lower()
