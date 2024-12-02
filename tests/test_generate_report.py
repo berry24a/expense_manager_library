@@ -2,7 +2,7 @@ import unittest
 import pandas as pd
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../expense_manager_library')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from expense_manager_library.report_generator import generate_report
 
 class TestGenerateReport(unittest.TestCase):
