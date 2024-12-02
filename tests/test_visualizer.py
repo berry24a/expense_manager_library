@@ -18,7 +18,12 @@ class TestVisualizer(unittest.TestCase):
         os.makedirs(self.output_dir, exist_ok=True)
 
     def tearDown(self):
-        plt.close("all")
+        if os.path.exists("results/test_bar_chart.png"):
+            os.remove("results/test_bar_chart.png")
+        if os.path.exists("results/test_line_chart.png"):
+            os.remove("results/test_line_chart.png")
+        if os.path.exists("results/test_pie_chart.png"):
+            os.remove("results/test_pie_chart.png")
 
     def test_draw_pie_chart(self):
         fig, ax = plt.subplots()
