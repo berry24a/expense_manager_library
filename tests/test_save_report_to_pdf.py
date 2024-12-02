@@ -12,12 +12,11 @@ class TestSaveReportToPDF(unittest.TestCase):
     # 테스트용 데이터
     def setUp(self):
         self.data = pd.DataFrame({
-            "날짜": ["20240101", "20240102", "20240103", "20240104"],
             "카테고리": ["교통", "쇼핑", "식비", "쇼핑"],
             "금액": [6000, 30000, 20000, 15000],
             "날짜": ["20241031", "20241031", "20241102", "20241105"]
         })
-        self.report_text = generate_report(self.data, include_total=True, include_categories=True)
+        self.report_text = generate_report(self.data, include_total=True, include_categories=True, include_monthly=True)
         self.pdf_path = "results/test_report.pdf"
         os.makedirs(os.path.dirname(self.pdf_path), exist_ok=True)
 
