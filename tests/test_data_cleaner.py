@@ -1,5 +1,7 @@
 import unittest
-from expense_manager_library.data_cleaner import categorize
+import os
+import pandas as pd
+from expense_manager_library.data_cleaner import categorize_transactions
 
 class TestCategorizeTransactions(unittest.TestCase):
     def setUp(self):
