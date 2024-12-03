@@ -3,10 +3,17 @@ from setuptools import setup, find_packages
 setup(
     name="expense_manager_library",
     version="1.0.0",
-    packages=find_packages(),  # 현재 디렉토리와 서브 디렉토리의 모든 패키지를 탐색
+    description="A library to analyze expense data and generate PDF reports.",
+    url="https://github.com/berry24a/expense_manager_library",
+    packages=find_packages(),
     install_requires=[
-        "pandas>=1.0.0",
+        "pandas>=1.3.5",
+        "matplotlib>=3.5.1"
     ],
-    include_package_data=True,
-    description="Library for categorizing and managing expense data",
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires=">=3.8",
 )
