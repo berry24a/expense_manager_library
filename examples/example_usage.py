@@ -2,32 +2,34 @@ import pandas as pd
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+from expense_manager_library.data_cleaner import categorize_transactions
+from expense_manager_library.visualizer import load_data
 from expense_manager_library.report_generator import generate_report, save_report_to_pdf
 
-# 샘플
-data = pd.DataFrame({
-    "카테고리": ["교통", "쇼핑", "식비", "쇼핑"],
-    "금액": [6000, 30000, 20000, 15000],
-    "날짜": ["20241031", "20241031", "20241102", "20241105"]
-})
+file_path = "examples/example_data.csv" # csv 파일 경로
+data = file_path
+
+categorize_transactions(data)
+
+categorize_data = load_data("results/classified_data.csv")
 
 # 보고서 생성
 report_text = generate_report(
-    data,
+    categorize_data,
     include_total=True,
     include_categories=True,
     include_monthly=True 
 )
 
-print("지출 보고서:")
 print(report_text)
 
 # pdf로 저장
 save_report_to_pdf(
-    data=data,
-    report_text=report_text,
+    categorize_data,
+    report_text,
     selected_graphs=["pie", "line", "bar"],  
     show_report=True, 
+    font_color="black",
     pdf_path="results/example_report.pdf" 
 )
 
