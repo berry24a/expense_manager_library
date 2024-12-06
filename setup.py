@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="expense_manager_library",
-    version="2.0.0",
+    version="3.0.0",
     description="A library to analyze expense data and generate PDF reports.",
     url="https://github.com/berry24a/expense_manager_library",
     packages=find_packages(),
