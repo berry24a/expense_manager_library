@@ -25,6 +25,15 @@ expense_manager_library는 개인의 소비 데이터를 분석하고 보고서�
 pip install expense_manager_library
 ```
 
+## CSV 파일 입력 방법
+```bash
+from expense_manager_library.data_cleaner import categorize_transactions
+
+csv_file_path = "자신의 파일 경로 입력.csv"
+
+categorize_transactions(csv_file_path)
+```
+
 ## 개발자 소개
 - **한여진** : 팀장, `report_generator` 모듈 개발 및 라이브러리 관리
 - **연소윤** : `data_cleaner` 모듈 개발
