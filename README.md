@@ -29,4 +29,4 @@ pip install expense_manager_library
 - **한여진** : 팀장, `report_generator` 모듈 개발 및 라이브러리 관리
 - **연소윤** : `data_cleaner` 모듈 개발
 - **박지은** : `visualizer` 모듈 개발
-- **임아진** : `example_data` 작성, 코드 검토 및 demo 개발
+- **임아진** : 코드 검토 및 피드백 제공, Sample Usage Repository 구현
